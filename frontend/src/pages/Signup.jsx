@@ -15,7 +15,7 @@ export default function Signup() {
     try {
       setLoading(true);
       setError("");
-      await VITE_BACKEND_URL.post("/auth/signup", { email, password });
+      await api.post("/auth/signup", { email, password });
       window.location.href = "/";
     } catch {
       setError("Signup failed. Try a different email.");

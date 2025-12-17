@@ -11,7 +11,7 @@ export default function Login() {
   const [password, setPassword] = useState("");
 
   const submit = async () => {
-    const res = await VITE_BACKEND_URL.post("/auth/login", { email, password });
+    const res = await api.post("/auth/login", { email, password });
     localStorage.setItem("token", res.data.token);
     window.location.href = "/dashboard";
   };

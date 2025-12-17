@@ -22,13 +22,13 @@ export default function Upload() {
     const form = new FormData();
     form.append("video", file);
 
-    const uploadRes = await VITE_BACKEND_URL.post("/upload", form);
+    const uploadRes = await api.post("/upload", form);
     const sessionId = uploadRes.data._id;
 
     socket.emit("join", sessionId);
     socket.on("status", (msg) => setStatus(msg));
 
-    await VITE_BACKEND_URL.post("/process", { sessionId });
+    await api.post("/process", { sessionId });
     navigate(`/player/${sessionId}`);
   };
 
