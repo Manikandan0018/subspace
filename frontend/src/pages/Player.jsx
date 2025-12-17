@@ -16,7 +16,7 @@ export default function Player() {
 
   useEffect(() => {
     axios
-      .get(`/api/process/${sessionId}`)
+      .get(`${VITE_BACKEND_URL}/api/process/${sessionId}`)
       .then((res) => setSession(res.data))
       .catch(console.error);
   }, [sessionId]);
