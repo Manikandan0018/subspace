@@ -3,13 +3,15 @@ import { api } from "../services/api";
 import { Link } from "react-router-dom";
 import logo from '../../image/logo.png'
 
+const VITE_BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
+
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const submit = async () => {
-    const res = await api.post("/auth/login", { email, password });
+    const res = await VITE_BACKEND_URL.post("/auth/login", { email, password });
     localStorage.setItem("token", res.data.token);
     window.location.href = "/dashboard";
   };

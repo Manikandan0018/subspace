@@ -7,6 +7,8 @@ import Transcript from "../components/Transcript";
 import SectionsList from "../components/SectionsList";
 import Header from "./Header";
 
+const VITE_BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
+
 export default function Player() {
   const { sessionId } = useParams();
   const videoRef = useRef(null);
@@ -14,7 +16,7 @@ export default function Player() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/process/${sessionId}`)
+      .get(`/api/process/${sessionId}`)
       .then((res) => setSession(res.data))
       .catch(console.error);
   }, [sessionId]);
@@ -37,7 +39,7 @@ export default function Player() {
             <div className="bg-white rounded-2xl shadow p-4">
               <video
                 ref={videoRef}
-                src={`http://localhost:5000/${session.videoPath}`}
+                src={`${VITE_BACKEND_URL}/${session.videoPath}`}
                 controls
                 className="w-full rounded-xl bg-black"
               />

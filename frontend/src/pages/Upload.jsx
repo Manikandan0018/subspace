@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 import Header from "./Header";
 import bg from "../../image/bg1.png";
 
+const VITE_BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
+
 export default function Upload() {
   const [file, setFile] = useState(null);
   const [status, setStatus] = useState("");
@@ -20,13 +22,13 @@ export default function Upload() {
     const form = new FormData();
     form.append("video", file);
 
-    const uploadRes = await api.post("/upload", form);
+    const uploadRes = await VITE_BACKEND_URL.post("/upload", form);
     const sessionId = uploadRes.data._id;
 
     socket.emit("join", sessionId);
     socket.on("status", (msg) => setStatus(msg));
 
-    await api.post("/process", { sessionId });
+    await VITE_BACKEND_URL.post("/process", { sessionId });
     navigate(`/player/${sessionId}`);
   };
 

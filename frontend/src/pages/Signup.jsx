@@ -3,6 +3,8 @@ import { api } from "../services/api";
 import { Link } from "react-router-dom";
 import logo from '../../image/logo.png'
 
+const VITE_BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
+
 export default function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -13,7 +15,7 @@ export default function Signup() {
     try {
       setLoading(true);
       setError("");
-      await api.post("/auth/signup", { email, password });
+      await VITE_BACKEND_URL.post("/auth/signup", { email, password });
       window.location.href = "/";
     } catch {
       setError("Signup failed. Try a different email.");

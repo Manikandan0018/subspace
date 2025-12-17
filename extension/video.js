@@ -2,6 +2,8 @@ let mediaRecorder;
 let recordedChunks = [];
 let screenStream;
 
+const VITE_BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
+
 chrome.runtime.onMessage.addListener((msg) => {
   if (msg.type === "START_RECORDING") {
     startRecording();
@@ -64,19 +66,19 @@ async function startRecording() {
     const form = new FormData();
     form.append("video", blob, "recording.webm");
 
-    const uploadRes = await fetch("http://localhost:5000/api/upload", {
+    const uploadRes = await fetch(`${VITE_BACKEND_URL}/api/upload`, {
       method: "POST",
       body: form,
     });
     const uploadData = await uploadRes.json();
 
-    await fetch("http://localhost:5000/api/process", {
+    await fetch(`${VITE_BACKEND_URL}/api/process`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ sessionId: uploadData._id }),
     });
 
-    window.open(`http://localhost:5173/player/${uploadData._id}`, "_blank");
+    window.open(`${VITE_BACKEND_URL}/player/${uploadData._id}`, "_blank");
   };
 
   mediaRecorder.start();
